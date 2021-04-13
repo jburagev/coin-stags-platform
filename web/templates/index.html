@@ -1,0 +1,111 @@
+<html>
+<head>
+    <title>Coinview</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+</head>
+
+<body id="main">
+    <h1>{{ title }}</h1>
+
+    <div id="chart"></div>
+    <div id="indicator"></div>
+    <div id="result"></div>
+
+    <div id="trades"></div>
+
+    <div style="border: 3px solid gray; padding: 20px; width: 600px; margin-top: 20px">
+        <h3>Buy crypto directly!</h3>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form action="/buy" method="post">
+            <label for="trade_size">Quantity:</label>
+            <input type="text" id="trade_size" name="trade_size" placeholder="eg. 0.001" /><br>
+            <label for="safety">Safety key:</label>
+            <input type="text" id="safety" name="safety" placeholder="eg. 876artf6d" /><br>
+            <label for="trade_type">Trade type:</label>
+            <select id="trade_type" name="trade_type">
+                <option value="ORDER_TYPE_MARKET">Market</option>
+                <option value="ORDER_TYPE_LIMIT">Limit</option>
+            </select><br>
+            <label for="trade_side">Trade side:</label>
+            <select id="trade_side" name="trade_side">
+                <option value="SIDE_BUY">Buy</option>
+                <option value="SIDE_SELL">Sell</option>
+            </select><br>
+            <label for="trade_price">Limit price:</label>
+            <input type="text" id="trade_price" name="trade_price" placeholder="eg. 321.45" /><br>
+            <input type="submit" id="order" name="order" value="Order" />
+            <input type="button" id="backtest" name="backtest" value="Backtest" />
+        </form>
+    </div>
+
+    <div style="border: 3px solid gray; padding: 20px; width: 600px; margin-top: 20px" id="settings">
+        <h3>Strategy settings</h3>
+        <form action="/input" method="post">
+            <label for="trade_symbol">Symbol:</label>
+            <select id="trade_symbol" name="trade_symbol">
+                {% for symbol in symbols %}
+                <option>{{symbol['symbol']}}</option>
+                {% endfor %}
+            </select><br>
+            <label for="length">Length:</label>
+            <input type="text" id="length" name="length" placeholder="eg. 12" /><br>
+            <input type="submit" name="submit" value="Submit" />
+        </form>
+        <!--Overbought
+        <input type="text" id="rsi_overbought" name="rsi_overbought" placeholder="70" />
+        Oversold
+        <input type="text" id="rsi_oversold" name="rsi_oversold" placeholder="30" />-->
+
+    </div>
+
+    <div id="my_balances">
+        <h2>Balances</h2>
+
+        <!--<table>
+            {% for balance in my_balances %}
+            <tr>
+                <td>
+                    {{ balance['asset'] }}
+                </td>
+                <td>
+                    {{ balance['free'] }}
+                </td>
+            </tr>
+
+            {% endfor %}
+        </table>-->
+
+
+    </div>
+
+
+    <script>
+        //var binanceSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
+
+        var tradeDiv = document.getElementById('trades')
+
+        /*binanceSocket.onmessage = function (event) {
+            console.log(event.data);
+
+            var messageObject = JSON.parse(event.data)
+
+            tradeDiv.append(messageObject.p)
+            <script src="{{ url_for('static', filename='chart.js') }}"></
+        }*/
+    </script>
+    <script src="{{ url_for('static', filename='chart.js') }}"></script>
+
+</body>
+
+</html>

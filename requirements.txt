@@ -1,0 +1,10 @@
+Flask~=1.1.2
+numpy~=1.19.5
+matplotlib~=3.3.4
+tensorflow~=2.4.1
+nltk~=3.5
+Keras~=2.4.3
+pandas~=1.2.3
+psycopg2~=2.8.6
+requests~=2.25.1
+poloniex~=0.0.17
